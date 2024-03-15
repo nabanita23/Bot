@@ -1,4 +1,3 @@
-----
 import React, { useState } from 'react';
 
 // Define a type for the state variable
@@ -20,5 +19,3 @@ function Counter() {
 }
 
 export default Counter;
-
-example
