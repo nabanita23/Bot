@@ -1,84 +1,88 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const Dropdowns = () => {
-  // Sample data for options
-  const grandparents = [
-    { id: 1, name: "Grandparent 1" },
-    { id: 2, name: "Grandparent 2" },
-    { id: 3, name: "Grandparent 3" }
-  ];
+function CascadingDropdown() {
+    const [options1, setOptions1] = useState([]);
+    const [selectedOption1, setSelectedOption1] = useState('');
+    const [options2, setOptions2] = useState([]);
+    const [selectedOption2, setSelectedOption2] = useState('');
+    const [options3, setOptions3] = useState([]);
+    const [selectedOption3, setSelectedOption3] = useState('');
 
-  const parents = [
-    { id: 1, name: "Parent 1", grandparentId: 1 },
-    { id: 2, name: "Parent 2", grandparentId: 1 },
-    { id: 3, name: "Parent 3", grandparentId: 2 },
-    { id: 4, name: "Parent 4", grandparentId: 2 },
-    { id: 5, name: "Parent 5", grandparentId: 3 }
-  ];
+    useEffect(() => {
+        // Fetch data for the first dropdown
+        axios.get('api/endpoint1')
+            .then(response => {
+                setOptions1(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data for dropdown 1:', error);
+            });
+    }, []);
 
-  const children = [
-    { id: 1, name: "Child 1", parentId: 1 },
-    { id: 2, name: "Child 2", parentId: 1 },
-    { id: 3, name: "Child 3", parentId: 2 },
-    { id: 4, name: "Child 4", parentId: 3 },
-    { id: 5, name: "Child 5", parentId: 4 },
-    { id: 6, name: "Child 6", parentId: 5 }
-  ];
+    useEffect(() => {
+        if (selectedOption1 !== '') {
+            // Fetch data for the second dropdown based on the selected value of the first dropdown
+            axios.get(`api/endpoint2?param=${selectedOption1}`)
+                .then(response => {
+                    setOptions2(response.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data for dropdown 2:', error);
+                });
+        }
+    }, [selectedOption1]);
 
-  const [selectedGrandparent, setSelectedGrandparent] = useState(null);
-  const [selectedParent, setSelectedParent] = useState(null);
-  const [selectedChild, setSelectedChild] = useState(null);
+    useEffect(() => {
+        if (selectedOption2 !== '') {
+            // Fetch data for the third dropdown based on the selected value of the second dropdown
+            axios.get(`api/endpoint3?param=${selectedOption2}`)
+                .then(response => {
+                    setOptions3(response.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data for dropdown 3:', error);
+                });
+        }
+    }, [selectedOption2]);
 
-  const handleGrandparentChange = (e) => {
-    setSelectedGrandparent(parseInt(e.target.value));
-    setSelectedParent(null);
-    setSelectedChild(null);
-  };
+    const handleOption1Change = (event) => {
+        setSelectedOption1(event.target.value);
+        setSelectedOption2(''); // Reset second dropdown when the first dropdown changes
+        setSelectedOption3(''); // Reset third dropdown when the first dropdown changes
+    };
 
-  const handleParentChange = (e) => {
-    setSelectedParent(parseInt(e.target.value));
-    setSelectedChild(null);
-  };
+    const handleOption2Change = (event) => {
+        setSelectedOption2(event.target.value);
+        setSelectedOption3(''); // Reset third dropdown when the second dropdown changes
+    };
 
-  const handleChildChange = (e) => {
-    setSelectedChild(parseInt(e.target.value));
-  };
+    const handleOption3Change = (event) => {
+        setSelectedOption3(event.target.value);
+    };
 
-  return (
-    <div>
-      <label htmlFor="grandparent">Grandparent:</label>
-      <select id="grandparent" onChange={handleGrandparentChange} value={selectedGrandparent || ''}>
-        <option value="">Select Grandparent</option>
-        {grandparents.map(grandparent => (
-          <option key={grandparent.id} value={grandparent.id}>{grandparent.name}</option>
-        ))}
-      </select>
+    return (
+        <div>
+            <select value={selectedOption1} onChange={handleOption1Change}>
+                <option value="">Select Option 1</option>
+                {options1.map(option => (
+                    <option key={option.id} value={option.value}>{option.label}</option>
+                ))}
+            </select>
+            <select value={selectedOption2} onChange={handleOption2Change}>
+                <option value="">Select Option 2</option>
+                {options2.map(option => (
+                    <option key={option.id} value={option.value}>{option.label}</option>
+                ))}
+            </select>
+            <select value={selectedOption3} onChange={handleOption3Change}>
+                <option value="">Select Option 3</option>
+                {options3.map(option => (
+                    <option key={option.id} value={option.value}>{option.label}</option>
+                ))}
+            </select>
+        </div>
+    );
+}
 
-      <label htmlFor="parent">Parent:</label>
-      <select id="parent" onChange={handleParentChange} value={selectedParent || ''} disabled={!selectedGrandparent}>
-        <option value="">Select Parent</option>
-        {parents.map(parent => {
-          if (parent.grandparentId === selectedGrandparent) {
-            return <option key={parent.id} value={parent.id}>{parent.name}</option>;
-          } else {
-            return null;
-          }
-        })}
-      </select>
-
-      <label htmlFor="child">Child:</label>
-      <select id="child" onChange={handleChildChange} value={selectedChild || ''} disabled={!selectedParent}>
-        <option value="">Select Child</option>
-        {children.map(child => {
-          if (child.parentId === selectedParent) {
-            return <option key={child.id} value={child.id}>{child.name}</option>;
-          } else {
-            return null;
-          }
-        })}
-      </select>
-    </div>
-  );
-};
-
-export default Dropdowns;
+export default CascadingDropdown;
