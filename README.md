@@ -1,22 +1,20 @@
-[
-  { "label": "Awaiting Original", "value": "Awaiting Original" },
-  { "label": "Critical (Credit)", "value": "Critical (Credit)" },
-  {
-    "label": "Facility Not currently Used",
-    "value": "Facility Not currently Used"
-  },
-  { "label": "Internal Credit Document", "value": "Internal Credit Document" },
-  { "label": "Migration", "value": "Migration" },
-  { "label": "Not Yet Required", "value": "Not Yet Required" },
-  { "label": "Pending Outside Council", "value": "Pending Outside Council" },
-  { "label": "Redeemed", "value": "Redeemed" },
-  { "label": "Re-doc Purpose Only", "value": "Re-doc Purpose Only" },
-  { "label": "Registered", "value": "Registered" },
-  { "label": "Returned to client", "value": "Returned to client" },
-  { "label": "Sent for Registration", "value": "Sent for Registration" },
-  { "label": "Sent For Scanning", "value": "Sent For Scanning" },
-  { "label": "Sent to Client", "value": "Sent to Client" },
-  { "label": "Sent to London", "value": "Sent to London" },
-  { "label": "Sent to SG", "value": "Sent to SG" },
-  { "label": "To be Registered", "value": "To be Registered" }
-]
+// Unix timestamp in milliseconds
+const timestamp = 1700219463250;
+
+// Create a new Date object
+const date = new Date(timestamp);
+
+// Options for date formatting
+const options = {
+  year: 'numeric',
+  month: 'short',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: true
+};
+
+// Format the date
+const formattedDate = date.toLocaleString('en-US', options);
+
+console.log(formattedDate); // Output: "24 Jun 2024, 11:29 AM"
