@@ -4,25 +4,46 @@ function formatDate(input: string): string {
 
   // Define options for date formatting
   const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
+    day: '2-digit',
     month: 'short',
-    day: 'numeric',
+    year: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
     hour12: true,
   };
 
-  // Format the date
-  const formattedDate = new Intl.DateTimeFormat('en-GB', options).format(date);
+  // Format the date parts
+  const formattedParts = new Intl.DateTimeFormat('en-GB', options).formatToParts(date);
 
-  // Convert month to short format and ensure day and hour formatting
-  const dateParts = formattedDate.split(', ');
-  const monthDayParts = dateParts[0].split(' ');
-  const timeParts = dateParts[1].split(':');
-  const hour = timeParts[0].length === 1 ? '0' + timeParts[0] : timeParts[0];
-  const minute = timeParts[1].split(' ')[0];
+  // Extract parts
+  let day, month, year, hour, minute, dayPeriod;
+  formattedParts.forEach(({ type, value }) => {
+    switch (type) {
+      case 'day':
+        day = value;
+        break;
+      case 'month':
+        month = value;
+        break;
+      case 'year':
+        year = value;
+        break;
+      case 'hour':
+        hour = value;
+        break;
+      case 'minute':
+        minute = value;
+        break;
+      case 'dayPeriod':
+        dayPeriod = value;
+        break;
+    }
+  });
 
-  return `${parseInt(monthDayParts[1])} ${monthDayParts[0]} ${monthDayParts[2]}, ${hour}:${minute} ${timeParts[1].split(' ')[1]}`;
+  // Construct the formatted date string
+  const formattedDate = `${day} ${month} ${year}, ${hour}:${minute} ${dayPeriod}`;
+
+  return formattedDate;
 }
 
 // Example usage
