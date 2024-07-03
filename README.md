@@ -1,3 +1,16 @@
+const datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
+
+function isValidDateFormat(dateString) {
+  return datePattern.test(dateString);
+}
+
+let dateString1 = "24/04/2024";
+let dateString2 = "2024/04/24";
+
+console.log(isValidDateFormat(dateString1)); // Output: true
+console.log(isValidDateFormat(dateString2)); // Output: false
+pppp
+
 function convertToDate(dateString) {
   // Split the date string into an array
   let dateParts = dateString.split('/');
