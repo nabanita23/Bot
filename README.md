@@ -1,3 +1,37 @@
+export enum NavDataValue {
+  ENV = 'env',
+  ACTIVITY_ID = 'activityId',
+  ACTIVITY_TYPE_CODE = 'activityTypeCode',
+  ACTIVITY_STS = 'activityStatus',
+  TASK_DISPLAY_NAME = 'activityDisplayName',
+  TASK_DESCRIPTION = 'activityDesc',
+  RAG_STATUS = 'ragSts',
+  TASK_DUE_DATE = 'taskDueDate',
+  TASK_START_DATE = 'taskStartDate',
+  TICKET_ID = 'caseId',
+  PROCESS_ID = 'processId',
+  PROCESS_STS = 'processStatus',
+  INITIATOR_SID = 'initiatorSid',
+  INITIATOR_NAME = 'initiatorName',
+  ASSIGNEE_SID = 'assigneeSid',
+  ASSIGNEE_NAME = 'assigneeName',
+  OWNER_SID = 'ownerSid',
+  OWNER_NAME = 'ownerName',
+  LOGGED_IN_SID = 'loggedInUserSid',
+  OWNER_TEAM_CD = 'owningTeamCode',
+  OWNER_TEAM_NAME = 'owningTeamName',
+  CATEGORY = 'categoryDesc',
+  REQUEST_TYPE = 'requestTypeDesc',
+  REQUEST_SUB_TYPE = 'requestSubTypeDesc',
+  ECI = 'eci',
+  GWM_ID = 'gwmId',
+  ACC_NO = 'accountNumber',
+  BUS_SYS_CD = 'businessSystemCode',
+  UNMASKED_CLIENT_NAME = 'clientName',
+  MASKED_CLIENT_NAME = 'maskedClientName',
+  ENTITY_CODE = 'entityCode',
+}
+
 const latestActivity = response?.latestActivityResponse[0];
 
   navData[NavDataValue.ACTIVITY_ID] = navData[NavDataValue.ACTIVITY_ID] ?? latestActivity?.id
