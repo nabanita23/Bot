@@ -1,15 +1,22 @@
-const dateFormat = require('dateformat');
+function epochToFormattedDate(epoch) {
+    const date = new Date(epoch * 1000); // Convert epoch to milliseconds
 
-// Given timestamp
-let timestamp = "Wed Jun 05 16:10:05 IST 2024";
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const monthsOfYear = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-// Manually parse the timestamp and remove the time zone abbreviation
-let cleanTimestamp = timestamp.replace('IST', '');
+    const day = daysOfWeek[date.getUTCDay()];
+    const month = monthsOfYear[date.getUTCMonth()];
+    const dayOfMonth = date.getUTCDate().toString().padStart(2, '0');
+    const year = date.getUTCFullYear();
+    const hours = date.getUTCHours().toString().padStart(2, '0');
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+    const seconds = date.getUTCSeconds().toString().padStart(2, '0');
 
-// Create a Date object from the cleaned timestamp
-let date = new Date(cleanTimestamp + ' GMT+0530'); // Assuming IST is GMT+0530
+    // Format the date string
+    const formattedDate = `${day} ${month} ${dayOfMonth} ${hours}:${minutes}:${seconds} CET ${year}`;
+    
+    return formattedDate;
+}
 
-// Format the date using dateformat
-let formattedDate = dateFormat(date, "dd mmm yyyy hh:MM TT");
-
-console.log(formattedDate); // Output: 05 Jun 2024 04:10 PM
+const epoch = 1717611005; // Example epoch timestamp
+console.log(epochToFormattedDate(epoch)); // Outputs: Wed Jun 05 16:10:05 CET 2024
