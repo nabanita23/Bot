@@ -1,56 +1,79 @@
-import {createSlice, isAnyOf, PayloadAction} from "@reduxjs/toolkit";
-import {Access, AccessMode} from "~components/interfaces/WorkflowInterface";
-import {
-  editActiveWorkflowThunk,
-  editDraftWorkflowThunk,
-  enableFormCapabilityUsageThunk,
-  evaluateAccessThunk,
-  previewActiveWorkflowThunk
-} from "~components/statemanagement/AsyncThunk";
+import React, {useEffect, useRef} from "react";
+import {Container} from "react-bootstrap";
+import PageNavigation from "~components/Navigation/PageNavigation";
+import TaskStepper from "~components/Stepper/TaskStepper";
+import PageWrapper from "~components/Wizard/PageWrapper";
+import Slider from "~components/Wizard/slider/Slider";
+import SliderChild from "~components/Wizard/slider/SliderChild";
+import {setNavigationMetadata} from "~components/statemanagement/slices/NavigationSlice";
+import {useAppDispatch, useAppSelector} from "~components/statemanagement/hooks";
+import {elementSelector} from "~components/statemanagement/selectors";
+import {WizardElementType} from "~components/interfaces/WizardTypes";
+import Title from "~components/Header/Title";
+import WorkflowStepper from "~components/Header/WorkflowStepper";
+import {deleteSession, sendSessionHeartbeat} from "~components/service/SessionHeartbeatService";
+import {DEFAULT_NAMESPACE} from "~components/BuilderUtils/Constants";
+import {AccessMode} from "~components/interfaces/WorkflowInterface";
+import { Alert } from "@connectcore/connect-components-react";
+import InactivityDetector from "~components/Wizard/InactivityDetector";
 
-const initialState :Access = {
-  mode:AccessMode.READ_ONLY,
-  wizardUpdateState:0
-}
-const accessSlice = createSlice({
-   name:'accessStore',
-   initialState,
-  reducers:{
-    setAccessMode: (state,action:PayloadAction<AccessMode>) => {
-      state.mode = action.payload
-      state.wizardUpdateState = (state.wizardUpdateState ?? 0)+1
-    },
-    updateWizardState:(state) => {
-      state.wizardUpdateState = (state.wizardUpdateState ?? 0)+1
-    },
-    resetAccess:(state)=>{
-       state.wizardUpdateState = 0
+const Wizard = () => {
+
+  const {categoryMapping,elementMapping,pageMapping,elements} = useAppSelector(state => elementSelector(state))
+  const {mode,wizardUpdateState} = useAppSelector(state => state.accessStore)
+  const page = useAppSelector(state => state.navigationStore.page)
+
+  const {namespace,processDefId} = useAppSelector(state => state.workflowStore,(a, b) => ((a?.namespace ?? '')+a.processDefId) === ((b?.namespace ?? '')+b.processDefId))
+
+  const dispatch = useAppDispatch()
+
+  const timerRef = useRef<any>()
+
+  //capture heartbeat
+  useEffect(()=>{
+
+     const sessionId = (namespace ?? DEFAULT_NAMESPACE)+'-'+processDefId
+      timerRef.current = setInterval(()=>sendSessionHeartbeat(sessionId,mode === AccessMode.READ_ONLY)
+        .catch((e) => console.error(e)),30000)
+
+    //remove lock on unmount
+    return () => {
+        if(timerRef.current) clearInterval(timerRef.current)
+        deleteSession(sessionId,mode === AccessMode.READ_ONLY).catch((e) => console.error(e))
+
     }
-  },
-  extraReducers:(builder => {
-     builder
-       .addCase(enableFormCapabilityUsageThunk.fulfilled,(state) => {
-       state.mode = AccessMode.EDIT
-       state.wizardUpdateState = (state.wizardUpdateState ?? 0)+1
-     })
-       .addCase(editDraftWorkflowThunk.fulfilled,(state,action)=>{
-         state.mode = action.payload.accessMode ?? AccessMode.READ_ONLY
-         state.wizardUpdateState = (state.wizardUpdateState ?? 0)+1
-       })
-       .addCase(evaluateAccessThunk.fulfilled,(state, action)=> {
-           state.wizardUpdateState = 0
-           state.mode = action.payload ? AccessMode.EDIT : AccessMode.READ_ONLY
-       })
-       .addCase(evaluateAccessThunk.rejected,(state)=> {
-         state.wizardUpdateState = 0
-         state.mode = AccessMode.READ_ONLY
-       })
-       .addMatcher(isAnyOf(editActiveWorkflowThunk.fulfilled,previewActiveWorkflowThunk.fulfilled),(state,action)=> {
-         state.mode = action?.payload?.accessMode ?? AccessMode.READ_ONLY
-         state.wizardUpdateState = (state.wizardUpdateState ?? 0)+1
-       })
-  })
-})
+  },[])
 
-export const {setAccessMode,resetAccess,updateWizardState} = accessSlice.actions
-export default accessSlice.reducer
+  useEffect(()=> {
+     // dummy page attribute passed
+      dispatch(setNavigationMetadata({categoryMapping,elementMapping,pageMapping,page:100000000000}))
+  },[categoryMapping,elementMapping,pageMapping,elements,wizardUpdateState])
+
+  return(
+    <Container fluid className='d-flex flex-column justify-content-end px-0' style={{width:'100vw',height:'100vh'}}>
+
+      {mode !==AccessMode.EDIT &&
+        <Alert kind="info" className="w-100">
+        You are viewing the workflow in preview (read-only) mode
+      </Alert>}
+
+      {mode === AccessMode.EDIT && <InactivityDetector /> }
+
+        <WorkflowStepper />
+        <Title />
+        <Container fluid className = 'd-flex justify-content-between flex-fill p-0' style={{overflowY:'auto'}}>
+          <TaskStepper showForElements = {[WizardElementType.TASK_CONFIG,WizardElementType.FORM]}/>
+            <Slider>
+              {elements.map((element,idx)=>
+                <SliderChild key = {wizardUpdateState+'-'+element.type+'-'+idx} index={page}>
+                <PageWrapper index = {idx} elementType = {element?.type}
+                              category = {element?.metadataProps?.category} childProps = {...element?.elementProps}/>
+              </SliderChild>)}
+            </Slider>
+        </Container>
+         <PageNavigation totalPages = {elements.length}/>
+       </Container>
+  );
+}
+
+export  default Wizard
