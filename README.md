@@ -295,11 +295,7 @@ export class HomeComponent implements OnInit {
     // this.uploadFile(files.item(0));
   }
   fileChange(event) {
-    const files = event.target.files; // Get the list of files
-     if (files.length > 2) {
-     this.createErrorAlert('You can only upload a maximum of 2 files.');
-     return;
-    }
+   
     console.log(event , event[event.length - 1 ]);
     if (event[event.length - 1 ].size > constants.maxFileSize || event[event.length - 1 ].size === 0) {
       this.createErrorAlert('File size should be minimum 1 Byte or maximum 25 MB');
