@@ -295,7 +295,7 @@ export class HomeComponent implements OnInit {
     // this.uploadFile(files.item(0));
   }
   fileChange(event) {
-   
+
     console.log(event , event[event.length - 1 ]);
     if (event[event.length - 1 ].size > constants.maxFileSize || event[event.length - 1 ].size === 0) {
       this.createErrorAlert('File size should be minimum 1 Byte or maximum 25 MB');
@@ -308,9 +308,6 @@ export class HomeComponent implements OnInit {
   }
   uploadFile(file) {
     console.log(file, this.uploadedfile);
-
-
-
     const formData = new FormData();
     const aa = JSON.stringify({
         docMetaData: {
