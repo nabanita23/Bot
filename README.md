@@ -1,3 +1,50 @@
+import { Button } from '@connectcore/connect-components-react'
+import { useAppSelector } from '~components/statemanagement/hooks'
+import { postFormData } from '~service/WorkflowService'
+// import FormActionRenderer from '~components/FormRenderer/FormActionRenderer'
+
+const FormActionFooter = () => {
+  const formData = useAppSelector(state => state.workflowStore.form)
+  const navData = useAppSelector(state => state.workflowStore.navData)
+  const render = () => {
+    return (
+      <>
+        <Button
+          kind="primary"
+          onClick={async () => {
+            const resp = await postFormData(formData, navData, { formFlow: 'abandon' })
+            console.log(resp)
+          }}
+        >
+          Abandon
+        </Button>
+        <Button
+          kind="danger"
+          onClick={async () => {
+            const resp = await postFormData(formData, navData, { formFlow: 'submit' })
+            console.log(resp)
+          }}
+        >
+          Submit
+        </Button>
+      </>
+    )
+  }
+
+  return (
+    <div className="d-flex justify-content-between" style={{ width: '100%' }}>
+      {render()}
+    </div>
+  )
+}
+
+export default FormActionFooter
+
+
+
+
+
+yo
 import {
   AppContainer,
   Form,
