@@ -1,11 +1,18 @@
 import { Button } from '@connectcore/connect-components-react'
 import { useAppSelector } from '~components/statemanagement/hooks'
 import { postFormData } from '~service/WorkflowService'
-// import FormActionRenderer from '~components/FormRenderer/FormActionRenderer'
 
 const FormActionFooter = () => {
   const formData = useAppSelector(state => state.workflowStore.form)
   const navData = useAppSelector(state => state.workflowStore.navData)
+
+  // Function to check if mandatory fields are filled
+  const areMandatoryFieldsFilled = () => {
+    // Replace with actual logic to check if mandatory fields are filled
+    // Example:
+    return formData.mandatoryField1 && formData.mandatoryField2
+  }
+
   const render = () => {
     return (
       <>
@@ -24,6 +31,7 @@ const FormActionFooter = () => {
             const resp = await postFormData(formData, navData, { formFlow: 'submit' })
             console.log(resp)
           }}
+          disabled={!areMandatoryFieldsFilled()} // Disable button if mandatory fields are not filled
         >
           Submit
         </Button>
@@ -39,6 +47,7 @@ const FormActionFooter = () => {
 }
 
 export default FormActionFooter
+
 
 
 
