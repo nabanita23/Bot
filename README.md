@@ -28,10 +28,10 @@ const FormBodyRenderer = () => {
   const { formData } = useAppSelector(state => state.workflowStore.form);
   const dispatch = useAppDispatch();
 
-  const { isSuccess, data, } = useQuery(
+  const { isSuccess, data } = useQuery(
     ['fetchDocSection', navData?.[NavDataValue.ENTITY_CODE]],
     () => getDocumentOptions({ endPointSlug: 'form/fetchDocSection', payload: { entityCode: navData?.[NavDataValue.ENTITY_CODE] } }),
-    {...commonReactQueryParams, enabled: !!navData?.[NavDataValue.ENTITY_CODE]}
+    { ...commonReactQueryParams, enabled: !!navData?.[NavDataValue.ENTITY_CODE] }
   )
 
   const [options, setOptions] = useState({
@@ -43,6 +43,8 @@ const FormBodyRenderer = () => {
     processStatus: processStatusOptions,
     trackingStatus: trackingStatusOptions,
   })
+
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const waiveRequestData = [
     { value: 'yes', text: 'Yes' },
@@ -61,6 +63,10 @@ const FormBodyRenderer = () => {
   useEffect(() => {
     if (isSuccess) fetchDocSectionOptions()
   }, [isSuccess, data])
+
+  useEffect(() => {
+    validateForm();
+  }, [formData])
 
   const clearOptions = level => {
     if (level === 2) {
@@ -113,11 +119,17 @@ const FormBodyRenderer = () => {
     dispatch(setFormFields({ formData: changedField }))
   }
 
+  const validateForm = () => {
+    const requiredFields = ['docSection', 'docCode', 'docStatus', 'trackingStatus'];
+    const isValid = requiredFields.every(field => formData[field]?.value);
+    setIsFormValid(isValid);
+  }
+
   return (
     <AppContainer className="container h-auto mx-0 mb-5 pb-5">
       <Form
         onChange={handleChange}
-        submittable={true}
+        submittable={isFormValid}
         onSubmit={() => alert('Form is going to be submitted')}
       >
         <div className="row">
