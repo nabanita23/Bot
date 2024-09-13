@@ -1,15 +1,48 @@
-function compareStringsIgnoreCamelCase(str1, str2) {
-    const normalizeString = (str) => {
-        return str
-            .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space before uppercase letters
-            .toLowerCase()                      // Convert to lowercase
-            .replace(/\s+/g, '');               // Remove spaces
-    };
-
-    return normalizeString(str1) === normalizeString(str2);
+{
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "editor.lineHeight": 20,
+  "editor.fontSize": 12,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll": "explicit",
+    "source.addMissingImports": "explicit"
+  },
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.suggest.autoImports": true,
+  "javascript.suggest.autoImports": true,
+  "editor.bracketPairColorization.enabled": true,
+  "eslint.rules.customizations": [
+    { "rule": "*", "severity": "warn" },
+    { "rule": "no-unused-vars", "severity": "error" }
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "git.autofetch": true,
+  "editor.guides.indentation": true,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "terminal.integrated.env.osx": {},
+  "console-ninja.featureSet": "Community",
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "workbench.startupEditor": "none",
+  "explorer.confirmDelete": false
 }
-
-// Examples
-console.log(compareStringsIgnoreCamelCase('myVariableName', 'myvariablename')); // true
-console.log(compareStringsIgnoreCamelCase('anotherExampleHere', 'anotherexamplehere')); // true
-console.log(compareStringsIgnoreCamelCase('TestStringOne', 'teststringone')); // true
