@@ -1,15 +1,59 @@
-Here’s a self-appraisal focused on teamwork and leadership, tailored for a software industry role:
+import React, { useState } from 'react';
 
----
+const FormWidget = ({ apiUrl, fields, onSuccess, onError }) => {
+  const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-### Teamwork
-In my role, I have prioritized creating an environment where collaboration and open communication are foundational values. By actively listening to my team members' ideas, concerns, and solutions, I encourage a culture where everyone feels comfortable contributing. I've consistently supported my colleagues by sharing my expertise, assisting in problem-solving, and ensuring we work cohesively toward shared goals. I believe in building relationships based on trust and mutual respect, which has enabled us to deliver high-quality results. My approach to teamwork has enhanced our project outcomes by fostering a sense of ownership and accountability among team members, leading to more efficient and innovative solutions.
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
-One area where I’ve especially demonstrated effective teamwork is in cross-functional projects. By coordinating with other departments, such as QA, DevOps, and Product Management, I’ve helped streamline our workflows, reduce redundancies, and ensure everyone is aligned on project goals. My efforts in cross-team communication have significantly minimized misunderstandings, leading to smoother project progression and timely deliveries.
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) throw new Error('Failed to submit form');
+      const result = await response.json();
+      setLoading(false);
+      onSuccess(result);
+    } catch (err) {
+      setLoading(false);
+      setError(err.message);
+      onError(err.message);
+    }
+  };
 
-### Leadership
-As a leader, my primary objective is to inspire and empower my team to reach their highest potential. I focus on setting clear, attainable goals, providing the necessary resources, and removing obstacles that may hinder their performance. I lead by example, holding myself to the same high standards I set for my team, and am committed to maintaining transparency in my decisions and actions. My regular one-on-one meetings with team members allow me to address any challenges early on and tailor my approach to their individual growth and development.
+  return (
+    <div style={{ border: '1px solid #ccc', padding: '1em', borderRadius: '8px' }}>
+      <form onSubmit={handleSubmit}>
+        {fields.map((field) => (
+          <div key={field.name} style={{ marginBottom: '1em' }}>
+            <label htmlFor={field.name}>{field.label}</label>
+            <input
+              type={field.type || 'text'}
+              id={field.name}
+              name={field.name}
+              value={formData[field.name] || ''}
+              onChange={(e) => handleChange(field.name, e.target.value)}
+              required={field.required}
+              style={{ display: 'block', width: '100%', padding: '0.5em', marginTop: '0.5em' }}
+            />
+          </div>
+        ))}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <button type="submit" disabled={loading} style={{ padding: '0.5em 1em' }}>
+          {loading ? 'Submitting...' : 'Submit'}
+        </button>
+      </form>
+    </div>
+  );
+};
 
-In terms of strategic leadership, I have successfully guided my team through several complex projects, maintaining focus on our objectives even under challenging timelines. By fostering an environment where innovation is encouraged, I have led my team to develop and implement creative solutions that meet both the technical and business needs of our clients. I am also committed to continual improvement, regularly reviewing our processes to identify areas for enhancement and to adapt to the ever-evolving software landscape.
-
-Overall, my dedication to teamwork and strong leadership has driven our team to exceed our project goals and deliver software solutions that align with the organization’s strategic vision. I remain committed to further developing my skills as a leader and a teammate to maximize our collective success.
+export default FormWidget;
