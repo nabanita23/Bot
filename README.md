@@ -1,59 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const FormWidget = ({ apiUrl, fields, onSuccess, onError }) => {
+const EmbeddableFormWidget = ({ apiUrl, formFields, onSubmit }) => {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  const handleChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) throw new Error('Failed to submit form');
-      const result = await response.json();
-      setLoading(false);
-      onSuccess(result);
-    } catch (err) {
-      setLoading(false);
-      setError(err.message);
-      onError(err.message);
+  useEffect(() => {
+    if (apiUrl) {
+      setLoading(true);
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          setFormData(data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+          setLoading(false);
+        });
     }
+  }, [apiUrl]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (onSubmit) onSubmit(formData);
+  };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <div style={{ border: '1px solid #ccc', padding: '1em', borderRadius: '8px' }}>
-      <form onSubmit={handleSubmit}>
-        {fields.map((field) => (
-          <div key={field.name} style={{ marginBottom: '1em' }}>
-            <label htmlFor={field.name}>{field.label}</label>
-            <input
-              type={field.type || 'text'}
-              id={field.name}
-              name={field.name}
-              value={formData[field.name] || ''}
-              onChange={(e) => handleChange(field.name, e.target.value)}
-              required={field.required}
-              style={{ display: 'block', width: '100%', padding: '0.5em', marginTop: '0.5em' }}
-            />
-          </div>
-        ))}
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit" disabled={loading} style={{ padding: '0.5em 1em' }}>
-          {loading ? 'Submitting...' : 'Submit'}
-        </button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      {formFields.map((field) => (
+        <div key={field.name}>
+          <label htmlFor={field.name}>{field.label}</label>
+          <input
+            type={field.type}
+            id={field.name}
+            name={field.name}
+            value={formData[field.name] || ''}
+            onChange={handleChange}
+          />
+        </div>
+      ))}
+      <button type="submit">Submit</button>
+    </form>
   );
 };
 
-export default FormWidget;
+export default EmbeddableFormWidget;
