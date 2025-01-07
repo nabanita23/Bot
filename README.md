@@ -1,11 +1,31 @@
-<div id="widget-container"></div>
-<script>
-  new EmbeddableFormWidget({
-    apiUrl: 'https://api.example.com/data',
-    formFields: [
-      { name: 'name', label: 'Name', type: 'text' },
-      { name: 'email', label: 'Email', type: 'email' },
-    ],
-    onSubmit: (data) => console.log('Form submitted:', data),
-  }).render(document.getElementById('widget-container'));
-</script>
+import React from 'react';
+import ReactDOM from 'react-dom';
+import FormWidget from './FormWidget';
+
+const App = () => {
+  const handleSuccess = (result) => {
+    console.log('Form submitted successfully:', result);
+  };
+
+  const handleError = (error) => {
+    console.error('Error submitting form:', error);
+  };
+
+  return (
+    <div>
+      <h1>Embed Form Widget</h1>
+      <FormWidget
+        apiUrl="https://example.com/api/submit"
+        fields={[
+          { name: 'name', label: 'Name', required: true },
+          { name: 'email', label: 'Email', type: 'email', required: true },
+          { name: 'message', label: 'Message', type: 'textarea' },
+        ]}
+        onSuccess={handleSuccess}
+        onError={handleError}
+      />
+    </div>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById('root'));
