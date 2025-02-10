@@ -1,103 +1,50 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
-const FormWidget = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-  });
+export default function ChartFormBuilder() {
+  const [jsonData, setJsonData] = useState("[{\"name\":\"A\",\"value\":10},{\"name\":\"B\",\"value\":20}]");
+  const [data, setData] = useState(JSON.parse(jsonData));
+  
+  const handleInputChange = (e) => {
+    setJsonData(e.target.value);
+  };
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  // Fetch data from API
-  const fetchData = async () => {
-    setLoading(true);
-    setError(null);
-
+  const handleUpdateChart = () => {
     try {
-      const response = await axios.get('https://api.example.com/user-details'); // Replace with actual API endpoint
-      const { name, email, phone } = response.data;
-
-      // Populate form data
-      setFormData({
-        name: name || '',
-        email: email || '',
-        phone: phone || '',
-      });
-    } catch (err) {
-      setError('Failed to fetch data. Please try again.');
-    } finally {
-      setLoading(false);
+      const parsedData = JSON.parse(jsonData);
+      setData(parsedData);
+    } catch (error) {
+      alert("Invalid JSON format");
     }
   };
 
-  // Handle form input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Add logic for further processing
-  };
-
   return (
-    <div style={{ maxWidth: '400px', margin: 'auto', padding: '20px', border: '1px solid #ccc' }}>
-      <h3>Form Widget</h3>
-      <button onClick={fetchData} disabled={loading} style={{ marginBottom: '10px' }}>
-        {loading ? 'Loading...' : 'Fetch Data'}
-      </button>
-
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '10px' }}>
-          <label>Name:</label>
-          <input
+    <div className="p-4 max-w-2xl mx-auto">
+      <Card>
+        <CardContent className="p-4 space-y-4">
+          <Input
             type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '5px' }}
+            value={jsonData}
+            onChange={handleInputChange}
+            placeholder='Enter JSON data (e.g., [{"name":"A","value":10}])'
           />
-        </div>
-
-        <div style={{ marginBottom: '10px' }}>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '5px' }}
-          />
-        </div>
-
-        <div style={{ marginBottom: '10px' }}>
-          <label>Phone:</label>
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '5px' }}
-          />
-        </div>
-
-        <button type="submit" style={{ padding: '10px 20px' }}>
-          Submit
-        </button>
-      </form>
+          <Button onClick={handleUpdateChart}>Update Chart</Button>
+        </CardContent>
+      </Card>
+      <div className="mt-6">
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Line type="monotone" dataKey="value" stroke="#8884d8" strokeWidth={2} />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
-};
-
-export default FormWidget;
+}
