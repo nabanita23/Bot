@@ -1,55 +1,35 @@
-import { StyleSheet } from '@react-pdf/renderer';
+function formatKey(key) {
+  return key.replace(/([A-Z])/g, ' $1') // Add space before uppercase letters
+            .replace(/^./, str => str.toUpperCase()); // Capitalize the first letter
+}
 
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: 'column',
-    padding: 20,
-    fontFamily: 'Helvetica',
-  },
-  heading: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  subHeading: {
-    fontSize: 14,
-    fontWeight: 'semibold',
-    marginBottom: 8,
-    textAlign: 'left',
-  },
-  paragraph: {
-    fontSize: 12,
-    lineHeight: 1.5,
-    textAlign: 'justify',
-    marginBottom: 6,
-  },
-  boldText: {
-    fontWeight: 'bold',
-  },
-  italicText: {
-    fontStyle: 'italic',
-  },
-  underlineText: {
-    textDecoration: 'underline',
-  },
-  listItem: {
-    fontSize: 12,
-    marginBottom: 4,
-  },
-  link: {
-    fontSize: 12,
-    color: 'blue',
-    textDecoration: 'underline',
-  },
-  footer: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-    fontSize: 10,
-    textAlign: 'center',
-  },
-});
+function flattenObjectToArray(obj, result = []) {
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
+        flattenObjectToArray(obj[key], result);
+      } else {
+        result.push({ title: formatKey(key), value: obj[key] });
+      }
+    }
+  }
+  return result;
+}
 
-export default styles;
+// Example usage
+const nestedObj = {
+  user: {
+    firstName: 'John',
+    lastName: 'Doe',
+    address: {
+      cityName: 'New York',
+      zipCode: '10001',
+    },
+    contactDetails: {
+      emailAddress: 'john@example.com',
+      phoneNumber: '123456789',
+    },
+  },
+};
+
+console.log(flattenObjectToArray(nestedObj));
