@@ -1,35 +1,36 @@
-function formatKey(key) {
-  return key.replace(/([A-Z])/g, ' $1') // Add space before uppercase letters
-            .replace(/^./, str => str.toUpperCase()); // Capitalize the first letter
-}
+import React from 'react';
+import { Document, Page, View, Text } from '@react-pdf/renderer';
+import styles from './styles'; // Import the styles
 
-function flattenObjectToArray(obj, result = []) {
-  for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
-        flattenObjectToArray(obj[key], result);
-      } else {
-        result.push({ title: formatKey(key), value: obj[key] });
-      }
-    }
-  }
-  return result;
-}
+const data = [
+  { title: "First Name", value: "John" },
+  { title: "Last Name", value: "Doe" },
+  { title: "City Name", value: "New York" },
+  { title: "Zip Code", value: "10001" },
+  { title: "Email Address", value: "john@example.com" },
+  { title: "Phone Number", value: "123456789" }
+];
 
-// Example usage
-const nestedObj = {
-  user: {
-    firstName: 'John',
-    lastName: 'Doe',
-    address: {
-      cityName: 'New York',
-      zipCode: '10001',
-    },
-    contactDetails: {
-      emailAddress: 'john@example.com',
-      phoneNumber: '123456789',
-    },
-  },
-};
+const MyPDF = () => (
+  <Document>
+    <Page size="A4" style={{ padding: 20 }}>
+      {/* Table Header */}
+      <View style={styles.table}>
+        <View style={styles.headerRow}>
+          <Text style={[styles.cell, styles.headerText]}>Title</Text>
+          <Text style={[styles.cell, styles.headerText, styles.lastCell]}>Value</Text>
+        </View>
 
-console.log(flattenObjectToArray(nestedObj));
+        {/* Table Rows */}
+        {data.map((item, index) => (
+          <View key={index} style={styles.row}>
+            <Text style={styles.cell}>{item.title}</Text>
+            <Text style={[styles.cell, styles.lastCell]}>{item.value}</Text>
+          </View>
+        ))}
+      </View>
+    </Page>
+  </Document>
+);
+
+export default MyPDF;
