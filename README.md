@@ -1,3 +1,28 @@
+function getLeafComponents(schema) {
+  const leafComponents = [];
+
+  function traverse(components) {
+    components.forEach((component) => {
+      if (component.components && component.components.length > 0) {
+        traverse(component.components);
+      } else if (component.columns && component.columns.length > 0) {
+        component.columns.forEach((col) => traverse(col.components || []));
+      } else {
+        leafComponents.push(component);
+      }
+    });
+  }
+
+  if (schema.components) {
+    traverse(schema.components);
+  }
+
+  return leafComponents;
+}
+
+Nabanita
+
+
 {
     "bodySchema": {
         "components": [
