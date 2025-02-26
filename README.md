@@ -1,11 +1,12 @@
 with Group
 
+```
 function getLeafComponentsGroupedByTitle(schema) {
   const groupedComponents = {};
 
-  function traverse(components, parentTitle = "Untitled") {
+  function traverse(components, parentTitle = "undefined") {
     components.forEach((component) => {
-      const title = component.title || parentTitle; // Use title if present, else inherit parent
+      const title = component.title || parentTitle; // Use title if present, otherwise fallback to "undefined"
 
       if (component.components && component.components.length > 0) {
         traverse(component.components, title);
@@ -30,6 +31,7 @@ function getLeafComponentsGroupedByTitle(schema) {
     data: groupedComponents[title],
   }));
 }
+```
 -------
 
 
