@@ -1,3 +1,39 @@
+with Group
+
+function getLeafComponentsGroupedByTitle(schema) {
+  const groupedComponents = {};
+
+  function traverse(components, parentTitle = "Untitled") {
+    components.forEach((component) => {
+      const title = component.title || parentTitle; // Use title if present, else inherit parent
+
+      if (component.components && component.components.length > 0) {
+        traverse(component.components, title);
+      } else if (component.columns && component.columns.length > 0) {
+        component.columns.forEach((col) => traverse(col.components || [], title));
+      } else {
+        if (!groupedComponents[title]) {
+          groupedComponents[title] = [];
+        }
+        groupedComponents[title].push(component);
+      }
+    });
+  }
+
+  if (schema.components) {
+    traverse(schema.components);
+  }
+
+  // Convert the grouped object into an array format
+  return Object.keys(groupedComponents).map((title) => ({
+    title,
+    data: groupedComponents[title],
+  }));
+}
+-------
+
+
+
 function getLeafComponents(schema) {
   const leafComponents = [];
 
