@@ -1,1 +1,210 @@
-{"traceId":"45fa5b2219d64a10488b846e3541f2d6","message":"Success","config":{"bodySchema":"{\"components\":[{\"label\":\"HTML\",\"tag\":\"h1\",\"content\":\"Special Services Check Order Form\",\"refreshOnChange\":false,\"key\":\"pageTitle\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"HTML\",\"tag\":\"h2\",\"content\":\"Instruction & Policy:\",\"refreshOnChange\":false,\"key\":\"instructionPolicyHeader\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"HTML\",\"tag\":\"p\",\"content\":\"* To be used to Request Re-Orders and New Orders that are not part of the Account Opening process & Cannot be connect Check Order Tool.\",\"refreshOnChange\":false,\"key\":\"instructionPolicyContent1\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"HTML\",\"tag\":\"p\",\"content\":\"*Please ATTACH COMPLETED form to Basic Service Request ticket in Connect. Ensure to update all details in respective fields to avoid ticket rejections.\",\"refreshOnChange\":false,\"key\":\"instructionPolicyContent2\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"HTML\",\"tag\":\"h2\",\"content\":\"NOTE:\",\"refreshOnChange\":false,\"key\":\"noteHeader\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"HTML\",\"tag\":\"p\",\"content\":\"1. To confirm check styles / color, please refer to shop.deluxe / orderpoint.deluxe\",\"refreshOnChange\":false,\"key\":\"noteContent1\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"HTML\",\"tag\":\"p\",\"content\":\"2. If product required is not available in the drop-down, please use free text to update product code\",\"refreshOnChange\":false,\"key\":\"noteContent2\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"HTML\",\"tag\":\"h2\",\"content\":\"Form Fields:\",\"refreshOnChange\":false,\"key\":\"formFieldsHeader\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"Expedite\",\"type\":\"select\",\"key\":\"expedite\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true},{\"label\":\"Mirror Previous Order on File\",\"type\":\"select\",\"key\":\"mirrorPreviousOrder\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true},{\"label\":\"Shipping Address\",\"type\":\"textfield\",\"key\":\"shippingAddress\",\"defaultValue\":\"(I affirm Shipping address is on file) If not, Call back details are needed\",\"input\":true,\"tableView\":true},{\"label\":\"Routing Number\",\"type\":\"textfield\",\"key\":\"routingNumber\",\"defaultValue\":\"(Provide from Connect / Old as per previous checks as per requirement)\",\"input\":true,\"tableView\":true},{\"label\":\"Account Number\",\"type\":\"textfield\",\"key\":\"accountNumber\",\"input\":true,\"tableView\":true},{\"label\":\"Branch Code\",\"type\":\"textfield\",\"key\":\"branchCode\",\"defaultValue\":\"(From Customer Assist (Cost Center)- last 5 digit)\",\"input\":true,\"tableView\":true},{\"label\":\"Check Start Number\",\"type\":\"textfield\",\"key\":\"checkStartNumber\",\"defaultValue\":\"(For NS, Refer to transactions tab / Prev connect ticket)\",\"input\":true,\"tableView\":true},{\"label\":\"If previous account was closed due to fraud, Mention Old Acc number\",\"type\":\"textfield\",\"key\":\"oldAccountNumber\",\"input\":true,\"tableView\":true},{\"label\":\"Product Code\",\"type\":\"textfield\",\"key\":\"productCode\",\"input\":true,\"tableView\":true},{\"label\":\"Product Reference\",\"type\":\"textfield\",\"key\":\"productReference\",\"input\":true,\"tableView\":true},{\"label\":\"DEFAULT (1001)\",\"type\":\"select\",\"key\":\"default1001\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true},{\"label\":\"HTML\",\"tag\":\"h2\",\"content\":\"Product Table:\",\"refreshOnChange\":false,\"key\":\"productTableHeader\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"type\":\"table\",\"numRows\":9,\"numCols\":5,\"rows\":[[{\"components\":[{\"tag\":\"p\",\"content\":\"PRODUCT\",\"type\":\"htmlelement\"}]},{\"components\":[{\"tag\":\"p\",\"content\":\"SOFTWARE (LASER)\",\"type\":\"htmlelement\"}]},{\"components\":[{\"tag\":\"p\",\"content\":\"STYLE\",\"type\":\"htmlelement\"}]},{\"components\":[{\"tag\":\"p\",\"content\":\"PRODUCT CODE\",\"type\":\"htmlelement\"}]},{\"components\":[{\"tag\":\"p\",\"content\":\"QUANTITY IN NUMBER\",\"type\":\"htmlelement\"}]},{\"components\":[{\"tag\":\"p\",\"content\":\"COLOR\",\"type\":\"htmlelement\"}]}],[{\"components\":[{\"tag\":\"p\",\"content\":\"Laser Check\",\"type\":\"htmlelement\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quickbook1\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"select\",\"key\":\"style1\",\"data\":{\"values\":[]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"textfield\",\"key\":\"productCode1\",\"input\":true,\"tableView\":true,\"label\":\"\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quantity1\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]}],[{\"components\":[{\"tag\":\"p\",\"content\":\"Paper Check\",\"type\":\"htmlelement\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quickbook2\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"select\",\"key\":\"style2\",\"data\":{\"values\":[]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"textfield\",\"key\":\"productCode2\",\"input\":true,\"tableView\":true,\"label\":\"\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quantity2\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]}],[{\"components\":[{\"tag\":\"p\",\"content\":\"Endorsement Stamp\",\"type\":\"htmlelement\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quickbook3\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"select\",\"key\":\"style3\",\"data\":{\"values\":[]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"textfield\",\"key\":\"productCode3\",\"input\":true,\"tableView\":true,\"label\":\"\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quantity3\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]}],[{\"components\":[{\"tag\":\"p\",\"content\":\"Checkbook Cover\",\"type\":\"htmlelement\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quickbook4\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"select\",\"key\":\"style4\",\"data\":{\"values\":[]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"textfield\",\"key\":\"productCode4\",\"input\":true,\"tableView\":true,\"label\":\"\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quantity4\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]}],[{\"components\":[{\"tag\":\"p\",\"content\":\"Envelope\",\"type\":\"htmlelement\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quickbook5\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"select\",\"key\":\"style5\",\"data\":{\"values\":[]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"textfield\",\"key\":\"productCode5\",\"input\":true,\"tableView\":true,\"label\":\"\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quantity5\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]}],[{\"components\":[{\"tag\":\"p\",\"content\":\"Deposit Slips\",\"type\":\"htmlelement\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quickbook6\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"select\",\"key\":\"style6\",\"data\":{\"values\":[]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"textfield\",\"key\":\"productCode6\",\"input\":true,\"tableView\":true,\"label\":\"\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quantity6\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]}],[{\"components\":[{\"tag\":\"p\",\"content\":\"Registers\",\"type\":\"htmlelement\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quickbook7\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"select\",\"key\":\"style7\",\"data\":{\"values\":[]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"textfield\",\"key\":\"productCode7\",\"input\":true,\"tableView\":true,\"label\":\"\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quantity7\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]}],[{\"components\":[{\"tag\":\"p\",\"content\":\"Sign Stamp/ Other\",\"type\":\"htmlelement\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quickbook8\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"select\",\"key\":\"style8\",\"data\":{\"values\":[]},\"input\":true,\"tableView\":true}]},{\"components\":[{\"type\":\"textfield\",\"key\":\"productCode8\",\"input\":true,\"tableView\":true,\"label\":\"\"}]},{\"components\":[{\"type\":\"select\",\"key\":\"quantity8\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true}]}]]},{\"label\":\"HTML\",\"tag\":\"h2\",\"content\":\"Additional Fields:\",\"refreshOnChange\":false,\"key\":\"additionalFieldsHeader\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"HTML\",\"tag\":\"p\",\"content\":\"PASTE LOGO IF ANY\",\"refreshOnChange\":false,\"key\":\"pasteLogo\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"Imprint Text\",\"type\":\"textfield\",\"key\":\"imprintText\",\"defaultValue\":\"(I affirm, Imprint name & address is as per Imprint guidelines & Imprint address is the address on record) If not, please attach PB Legal approval.\",\"input\":true,\"tableView\":true},{\"label\":\"Use if two or more signature lines required (Select Number)\",\"type\":\"select\",\"key\":\"signatureLines\",\"data\":{\"values\":[{\"label\":\"NA\",\"value\":\"na\"}]},\"input\":true,\"tableView\":true},{\"label\":\"TITLES OVER SIGNATURE LINE(S)\",\"type\":\"textfield\",\"key\":\"titlesOverSignatureLines\",\"input\":true,\"tableView\":true},{\"label\":\"Connect ticket Number\",\"type\":\"textfield\",\"key\":\"connectTicketNumber\",\"input\":true,\"tableView\":true},{\"label\":\"HTML\",\"tag\":\"h2\",\"content\":\"Special Instructions:\",\"refreshOnChange\":false,\"key\":\"specialInstructionsHeader\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"HTML\",\"tag\":\"p\",\"content\":\"2 DAY DELIVERY\",\"refreshOnChange\":false,\"key\":\"twoDayDelivery\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"HTML\",\"tag\":\"h2\",\"content\":\"Billing:\",\"refreshOnChange\":false,\"key\":\"billingHeader\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"HTML\",\"tag\":\"p\",\"content\":\"WAIVE CHARGE SHIPPING\",\"refreshOnChange\":false,\"key\":\"waiveChargeShipping\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false},{\"label\":\"HTML\",\"tag\":\"p\",\"content\":\"OVERNIGHT EXPRESS\",\"refreshOnChange\":false,\"key\":\"overnightExpress\",\"type\":\"htmlelement\",\"input\":false,\"tableView\":false}]}","actionSchema":"{\"display\":\"form\",\"components\":[{\"label\":\"Submit\",\"action\":\"custom\",\"showValidations\":false,\"theme\":\"primary\",\"size\":\"md\",\"block\":false,\"leftIcon\":\"\",\"rightIcon\":\"\",\"shortcut\":\"\",\"description\":\"\",\"tooltip\":\"\",\"customClass\":\"\",\"tabindex\":\"\",\"hidden\":false,\"autofocus\":false,\"disabled\":false,\"tableView\":false,\"modalEdit\":false,\"key\":\"workflowButton_activity_1d2egyn\",\"properties\":{},\"conditional\":{\"show\":null,\"when\":null,\"eq\":\"\",\"json\":\"\"},\"customConditional\":\"\",\"logic\":[],\"attributes\":{},\"overlay\":{\"style\":\"\",\"page\":\"\",\"left\":\"\",\"top\":\"\",\"width\":\"\",\"height\":\"\"},\"type\":\"button\",\"input\":true,\"placeholder\":\"\",\"prefix\":\"\",\"suffix\":\"\",\"multiple\":false,\"defaultValue\":null,\"protected\":false,\"unique\":false,\"persistent\":false,\"clearOnHide\":true,\"refreshOn\":\"\",\"redrawOn\":\"\",\"dataGridLabel\":true,\"labelPosition\":\"top\",\"errorLabel\":\"\",\"hideLabel\":false,\"dbIndex\":false,\"customDefaultValue\":\"\",\"calculateValue\":\"\",\"calculateServer\":false,\"widget\":{\"type\":\"input\"},\"validateOn\":\"change\",\"validate\":{\"required\":false,\"custom\":\"\",\"customPrivate\":false,\"strictDateValidation\":false,\"multiple\":false,\"unique\":false},\"allowCalculateOverride\":false,\"encrypted\":false,\"showCharCount\":false,\"showWordCount\":false,\"allowMultipleMasks\":false,\"addons\":[],\"id\":\"939b4cc7-6411-40dd-8a7a-84401322b31c\",\"custom\":\"const workflowActionMapping = {};\\nconst postSubmitActionMapping ={\\n    postSubmitConfirmation:{\\n\\t     confirmationMessage: 'Ticket Submitted Successfully',\\n\\t     closeWindow:true\\n\\t}\\n}\\nObject.entries(component.properties).forEach((entry) => {\\n  const [key, value] = entry;\\n  workflowActionMapping[key] = value;\\n});\\ndata['workflowActionMapping'] = workflowActionMapping;\\ndata['postSubmitActionMapping'] = postSubmitActionMapping\\n\\ndata['COMPONENT_KEY'] = component['key'];\\ninstance.root.executeSubmit();\",\"disableOnInvalid\":true,\"tags\":[\"workflowAction\"]}]}"},"formData":{}}
+import React from 'react'
+import { Page, Text, View, Document, StyleSheet, Font, Image } from '@react-pdf/renderer'
+const logo = require('../../images/logo.jpg')
+
+const outfitBold = require('../../fonts/Outfit-Bold.ttf')
+const outfitRegular = require('../../fonts/Outfit-Regular.ttf')
+
+Font.register({
+  family: 'outfitBold',
+  src: outfitBold,
+})
+
+Font.register({
+  family: 'outfitRegular',
+  src: outfitRegular,
+})
+
+// Create styles
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: 'column',
+    padding: 20,
+    fontFamily: 'outfitRegular',
+  },
+  section: {
+    marginBottom: 20,
+  },
+  heading: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    fontFamily: 'outfitBold',
+  },
+  subHeading: {
+    color: '#364153',
+    fontSize: 10,
+    fontWeight: 'semibold',
+    marginBottom: 8,
+    textAlign: 'left',
+  },
+  groupHeading: {
+    color: '#101828',
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginVertical: 8,
+    textAlign: 'left',
+  },
+  paragraph: {
+    color: '#101828',
+    fontSize: 10,
+    lineHeight: 1.5,
+    marginVertical: 6,
+    fontFamily: 'outfitRegular',
+  },
+  image: {
+    width: 100,
+    paddingBottom: 10,
+  },
+  table: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    border: '1px solid #d1d5dc',
+  },
+  row: {
+    flexDirection: 'row',
+    borderBottom: '1px solid #d1d5dc',
+  },
+  headerRow: {
+    flexDirection: 'row',
+    backgroundColor: '#f3f4f6',
+    borderTop: '1px solid #d1d5dc',
+    borderBottom: '1px solid #d1d5dc',
+  },
+  cell: {
+    flex: 1,
+    padding: 4,
+    fontSize: 10,
+    borderRight: '1px solid #d1d5dc',
+  },
+  lastCell: {
+    borderRight: 'none',
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    fontSize: 10,
+    textAlign: 'center',
+  },
+})
+
+// Utility function to check if a string contains HTML tags
+const containsHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str)
+
+// Utility function to handle nested objects and arrays
+const formatValue = (value) => {
+  if (Array.isArray(value)) {
+    // Handle arrays by formatting each element
+    return value
+      .map((item, index) => {
+        if (typeof item === 'object' && item !== null) {
+          // Format each object in the array
+          return `Item ${index + 1}: ${Object.entries(item)
+            .map(([key, val]) => `${key}: ${formatValue(val)}`)
+            .join(', ')}`
+        }
+        return `Item ${index + 1}: ${item ?? 'N/A'}`
+      })
+      .join('\n');
+  } else if (typeof value === 'object' && value !== null) {
+    // Handle objects by formatting key-value pairs
+    return Object.entries(value)
+      .map(([key, val]) => `${key}: ${formatValue(val)}`)
+      .join(', ');
+  }
+  return value ?? 'N/A'; // Return 'N/A' for null or undefined values
+};
+
+// Utility function to group components by title
+function getLeafComponentsGroupedByTitle(schema) {
+  const groupedComponents = {}
+
+  function traverse(components, parentTitle = '--') {
+    components.forEach((component) => {
+      const title = component.title || parentTitle // Use title if present, otherwise fallback to parent title
+
+      if (component.components && component.components.length > 0) {
+        traverse(component.components, title)
+      } else if (component.columns && component.columns.length > 0) {
+        component.columns.forEach((col) => traverse(col.components || [], title))
+      } else {
+        if (!groupedComponents[title]) {
+          groupedComponents[title] = []
+        }
+        groupedComponents[title].push(component)
+      }
+    })
+  }
+
+  if (schema.components) {
+    traverse(schema.components)
+  }
+
+  // Convert the grouped object into an array format
+  return Object.keys(groupedComponents).map((title) => ({
+    title,
+    data: groupedComponents[title],
+  }))
+}
+
+function PDFGenerator({ data, ticketId }) {
+  // Parse the bodySchema from the data
+  const bodySchema = data.bodySchema || (data.config && JSON.parse(data.config.bodySchema)) || null
+
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <Image style={styles.image} src={logo} />
+        <View style={styles.section}>
+          <Text style={styles.heading}>Pro Plus</Text>
+          <Text style={styles.subHeading}>Ticket Id: {ticketId}</Text>
+        </View>
+
+        {/* Render grouped components */}
+        {getLeafComponentsGroupedByTitle(bodySchema)?.map((collection) => (
+          <View style={styles.section} key={collection?.title}>
+            <Text style={styles.groupHeading}>{collection?.title}</Text>
+            <View style={styles.table}>
+              <View style={styles.headerRow}>
+                <Text style={[styles.cell]}>Title</Text>
+                <Text style={[styles.cell, styles.lastCell]}>Value</Text>
+              </View>
+              {collection?.data
+                ?.filter((item) => !containsHTML(item.label)) // Exclude labels with HTML tags
+                .map((item) => {
+                  let value;
+
+                  // Handle special cases like accountController
+                  if (item.key === 'accountController') {
+                    value = formatValue(data?.formData?.accountController);
+                  } else {
+                    value = formatValue(data?.formData?.[item.key]);
+                  }
+
+                  return (
+                    <View key={item.key} style={styles.row}>
+                      <Text style={styles.cell}>{item.label || 'N/A'}</Text>
+                      <Text style={[styles.cell, styles.lastCell]}>{value}</Text>
+                    </View>
+                  );
+                })}
+            </View>
+          </View>
+        ))}
+
+        <View style={styles.footer}>
+          <Text
+            style={styles.paragraph}
+            render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+            fixed
+          />
+          <Text style={styles.paragraph}>Report generated by ProPlus</Text>
+        </View>
+      </Page>
+    </Document>
+  )
+}
+
+export default PDFGenerator
