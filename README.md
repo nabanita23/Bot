@@ -1,4 +1,174 @@
 ```
+{
+  "employmentStatus": {
+    "retired": true,
+    "student": false,
+    "employed": false,
+    "former": false,
+    "selfEmployed": false,
+    "unemployed": false,
+    "other": false
+  },
+  "accountsWithOtherBanks": "Yes, Chase Bank & Citi Bank",
+  "countryCitizenship": "United States Of America",
+  "otherIncomeOtherPerson": [
+    {
+      "source": "Rental income",
+      "amount": "12000"
+    }
+  ],
+  "businessOwnership": [
+    {
+      "clientsNotableProducts": "Cleaning supplies, Disinfectants",
+      "yearEstablished": "01/01/2015",
+      "geographyOfMarkets": ["California", "Nevada"],
+      "companyName": "Adam Supplies Inc.",
+      "currentValueOfTheBusiness": "250000",
+      "profitMargin": "15%",
+      "numberOfLocations": "3",
+      "natureOfBusiness": { "type": "Retail & Wholesale" },
+      "estimatedAnnualNetIncome": "75000",
+      "approximateInitialInvestment": "50000",
+      "numberOfEmployees": "12"
+    }
+  ],
+  "inheritanceGift": [
+    {
+      "generation": "Grandparent",
+      "lastName": "Smith",
+      "gender": "Male",
+      "description": "Family estate",
+      "estimatedAmountReceived": "100000",
+      "suffix": "Jr.",
+      "relationshipToGiftingParty": "Grandson",
+      "otherLegalNames": "N/A",
+      "estimatedPresentValue": "120000",
+      "firstName": "John",
+      "countryOfLastKnownResidence": "USA",
+      "whenWasGiftOrInheritanceReceived": "2018-06-01",
+      "additionalInvestmentRentalIncome": "5000",
+      "middleName": "A",
+      "natureOfTheAssetReceived": "Real Estate"
+    }
+  ],
+  "sourceOfIncome": ["business", "investments"],
+  "relationshipEstablished": "2017-03-15",
+  "otherInstitutions": [
+    {
+      "institutionName": "Morgan Stanley"
+    }
+  ],
+  "investmentsAppreciation": [
+    {
+      "descriptionOfTheInvestments": "Tech stocks portfolio",
+      "estimatedInitialPurchaseSetupAmount": "15000",
+      "describeRealEstate": "N/A",
+      "describeAppreciation": "Increased 3x over 5 years",
+      "additionalInvestmentRentalIncome": "0",
+      "estimatedAmountOfSale": "45000",
+      "approximateSalePrice": "50000",
+      "yearTheBusinessWasSold": "2022",
+      "assetType": {
+        "physicalAsset": false,
+        "investibleAsset": true
+      }
+    }
+  ],
+  "inheritanceGiftOtherPerson": [
+    {
+      "generation": "Parent",
+      "lastName": "Johnson",
+      "gender": "Female",
+      "description": "Jewelry and Stocks",
+      "estimatedAmountReceived": "30000",
+      "suffix": "",
+      "relationshipToGiftingParty": "Daughter",
+      "otherLegalNames": "",
+      "estimatedPresentValue": "35000",
+      "firstName": "Emma",
+      "countryOfLastKnownResidence": "USA",
+      "whenWasGiftOrInheritanceReceived": "2020-12-10",
+      "additionalInvestmentRentalIncome": "2000",
+      "middleName": "L",
+      "natureOfTheAssetReceived": "Jewelry & Stocks"
+    }
+  ],
+  "employmentOtherPerson": [
+    {
+      "yearsOfService": "8",
+      "nameOfEmployer": "Tesla Inc.",
+      "approximateAnnualSalary": "120000",
+      "positionsHeldAndTenure": "Engineer (5 years), Manager (3 years)",
+      "descriptionOfTheBusiness": "Electric vehicles and energy"
+    }
+  ],
+  "employment": [
+    {
+      "yearsOfService": "6",
+      "nameOfEmployer": "Google LLC",
+      "approximateAnnualSalary": "130000",
+      "positionsHeldAndTenure": "Software Engineer (4 years), Tech Lead (2 years)",
+      "descriptionOfTheBusiness": "Technology and Internet Services"
+    }
+  ],
+  "saleOfAssetsBusiness": [
+    {
+      "estimatedInitialPurchaseSetupAmount": "40000",
+      "describeRealEstate": "Office building in downtown LA",
+      "yearSold": "2021",
+      "companyName": "Legacy Holdings",
+      "estimatedAmountOfSale": "150000",
+      "countriesOfOperation": ["USA"],
+      "approximateSalePrice": "170000"
+    }
+  ],
+  "saleOfAssetsBusinessOtherPerson": [
+    {
+      "estimatedInitialPurchaseSetupAmount": "25000",
+      "describeRealEstate": "Warehouse in Nevada",
+      "yearSold": "2020",
+      "companyName": "StorageMax",
+      "estimatedAmountOfSale": "80000",
+      "countriesOfOperation": ["USA"],
+      "approximateSalePrice": "90000"
+    }
+  ],
+  "businessOwnershipOtherPerson": [
+    {
+      "clientsNotableProducts": "Handcrafted goods",
+      "yearEstablished": "2012",
+      "geographyOfMarkets": ["Florida", "Texas"],
+      "companyName": "CraftyHands Co.",
+      "currentValueOfTheBusiness": "100000",
+      "yearEstablished1": "2012",
+      "profitMargin": "20%",
+      "numberOfLocations": "2",
+      "natureOfBusiness": { "type": "E-commerce" },
+      "estimatedAnnualNetIncome": "30000",
+      "approximateInitialInvestment": "15000",
+      "numberOfEmployees": "5"
+    }
+  ],
+  "investmentsAppreciationOtherPerson": [
+    {
+      "descriptionOfTheInvestments": "Mutual funds",
+      "estimatedInitialPurchaseSetupAmount": "10000",
+      "describeRealEstate": "",
+      "describeAppreciation": "Grew 2x over 4 years",
+      "additionalInvestmentRentalIncome": "0",
+      "estimatedAmountOfSale": "20000",
+      "approximateSalePrice": "22000",
+      "yearTheBusinessWasSold": "2023",
+      "assetType": {
+        "physicalAsset": false,
+        "investibleAsset": true
+      }
+    }
+  ]
+}
+
+```
+```
 function getSelectedLabels(schema, selectedValues) {
   if (!schema?.data?.values || !Array.isArray(selectedValues)) {
     return [];
