@@ -1,3 +1,4 @@
+```
 import React from 'react'
 import { Page, Text, View, Document, StyleSheet, Font, Image } from '@react-pdf/renderer'
 const logo = require('../../images/logo.jpg')
@@ -55,6 +56,35 @@ const styles = StyleSheet.create({
     width: 100,
     paddingBottom: 10,
   },
+  alignRight: {
+    textAlign: 'right',
+  },
+  boldText: {
+    fontWeight: 'bold',
+  },
+  italicText: {
+    fontStyle: 'italic',
+  },
+  underlineText: {
+    textDecoration: 'underline',
+  },
+  listItem: {
+    fontSize: 12,
+    marginBottom: 4,
+  },
+  link: {
+    fontSize: 12,
+    color: 'blue',
+    textDecoration: 'underline',
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    fontSize: 10,
+    textAlign: 'center',
+  },
   table: {
     display: 'flex',
     flexDirection: 'column',
@@ -80,78 +110,162 @@ const styles = StyleSheet.create({
   lastCell: {
     borderRight: 'none',
   },
-  footer: {
+  headerText: {
+    fontWeight: 'bold',
+    textAlign: 'left',
+  },
+  pageNumber: {
     position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-    fontSize: 10,
+    fontSize: 8,
+    bottom: 30,
+    left: 0,
+    right: 0,
     textAlign: 'center',
+    color: 'grey',
   },
 })
 
-// Utility function to check if a string contains HTML tags
-const containsHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str)
-
-// Utility function to handle nested objects and arrays
-const formatValue = (value) => {
-  if (Array.isArray(value)) {
-    // Handle arrays by formatting each element
-    return value
-      .map((item, index) => {
-        if (typeof item === 'object' && item !== null) {
-          // Format each object in the array
-          return `Item ${index + 1}: ${Object.entries(item)
-            .map(([key, val]) => `${key}: ${formatValue(val)}`)
-            .join(', ')}`
-        }
-        return `Item ${index + 1}: ${item ?? 'N/A'}`
-      })
-      .join('\n');
-  } else if (typeof value === 'object' && value !== null) {
-    // Handle objects by formatting key-value pairs
-    return Object.entries(value)
-      .map(([key, val]) => `${key}: ${formatValue(val)}`)
-      .join(', ');
+/**
+ * Build a key-value map from flat form data to resolve conditional dependencies.
+ */
+const extractFieldValues = (formSections) => {
+  const values = {};
+  for (const { data } of formSections) {
+    for (const field of data) {
+      if (field?.key && field.value !== undefined) {
+        values[field.key] = field.value;
+      }
+    }
   }
-  return value ?? 'N/A'; // Return 'N/A' for null or undefined values
+  return values;
 };
 
-// Utility function to group components by title
-function getLeafComponentsGroupedByTitle(schema) {
-  const groupedComponents = {}
+/**
+ * Evaluate if a field passes its conditional logic.
+ */
+const isFieldVisible = (field, valuesMap) => {
+  const cond = field.conditional;
+  if (!cond) return true;
 
-  function traverse(components, parentTitle = '--') {
-    components.forEach((component) => {
-      const title = component.title || parentTitle // Use title if present, otherwise fallback to parent title
+  const actual = valuesMap[cond.when];
 
-      if (component.components && component.components.length > 0) {
-        traverse(component.components, title)
-      } else if (component.columns && component.columns.length > 0) {
-        component.columns.forEach((col) => traverse(col.components || [], title))
-      } else {
-        if (!groupedComponents[title]) {
-          groupedComponents[title] = []
-        }
-        groupedComponents[title].push(component)
-      }
-    })
-  }
+  if (cond.show === true) return actual === cond.eq;
+  if (cond.show === false) return actual !== cond.eq;
 
-  if (schema.components) {
-    traverse(schema.components)
-  }
+  return true;
+};
 
-  // Convert the grouped object into an array format
-  return Object.keys(groupedComponents).map((title) => ({
+/**
+ * Removes fields from form sections based on failed conditional logic.
+ */
+const cleanConditionalFields = (formSections) => {
+  const valuesMap = extractFieldValues(formSections);
+
+  return formSections.map(({ title, data }) => ({
     title,
-    data: groupedComponents[title],
-  }))
+    data: data.filter((field) => isFieldVisible(field, valuesMap)),
+  }));
+};
+
+const getCustomList = (customFunction, formData) => {
+  const data = formData;
+  console.log('data', data)
+  let values;
+  eval(customFunction);
+  return values
 }
 
+/**
+ * Get the value to display for a component, handles radios and basic values.
+ */
+const getDisplayValue = (component, formData) => {
+  if (component.type === "radio") {
+    return (
+      component.values?.find((v) => v.value === formData[component.key])
+        ?.label || formData[component.key]
+    );
+  }
+  if (component.type === "select" && component.widget === 'choicesjs') {
+    if (component.dataSrc === 'url') {
+      return formData[component.key]
+    }
+    if (component.dataSrc === 'custom') {
+      const options = getCustomList(component?.data?.custom, formData);
+      return (
+        options?.find((v) => v.value === formData[component.key])
+          ?.label || formData[component.key]
+      );
+    }
+    const options = component.data?.values || component.values;
+    if (component?.multiple) {
+      const valueToLabelMap = options.reduce((map, item) => {
+        map[item.value] = item.label;
+        return map;
+      }, {});
+      const res = formData[component.key]?.map(value => valueToLabelMap[value]).filter(Boolean)
+
+      return res?.join(', ');
+    } else {
+      return (
+        options?.find((v) => v.value === formData[component.key])
+          ?.label || formData[component.key]
+      );
+    }
+  }
+  if (component.type === "selectboxes") {
+    const filtered = component.values?.filter((v) =>  formData?.[component.key]?.[v.value])
+
+    return filtered.map(option => option.label)?.join(', ') || formData[component.key];
+  }
+  return formData[component.key];
+};
+
+/**
+ * Flatten schema into titled sections with form data merged.
+ */
+const groupComponentsByTitle = (schema, formData) => {
+  const grouped = {};
+
+  const traverse = (components, parentTitle = "General") => {
+    for (const component of components) {
+      const title = component.title || parentTitle;
+
+      if (component.components) {
+        traverse(component.components, title);
+      } else if (component.columns) {
+        for (const col of component.columns) {
+          traverse(col.components || [], title);
+        }
+      } else if (component.key && component.type !== "htmlelement") {
+        if (!grouped[title]) grouped[title] = [];
+        grouped[title].push({
+          label: component.label,
+          displayValue: getDisplayValue(component, formData),
+          value: formData[component.key],
+          type: component.type,
+          key: component.key,
+          conditional: component.conditional,
+        });
+      }
+    }
+  };
+
+  traverse(schema.components);
+
+  return Object.entries(grouped).map(([title, data]) => ({ title, data }));
+};
+
 function PDFGenerator({ data, ticketId }) {
-  // Parse the bodySchema from the data
-  const bodySchema = data.bodySchema || (data.config && JSON.parse(data.config.bodySchema)) || null
+
+  const formData = data.formData;
+  const bodySchema = JSON.parse(data.config?.bodySchema || "{}");
+
+  if (!formData || !bodySchema?.components) {
+    throw new Error("Invalid JSON structure or missing fields");
+  }
+
+  const grouped = groupComponentsByTitle(bodySchema, formData);
+  const cleaned = cleanConditionalFields(grouped);
 
   return (
     <Document>
@@ -163,40 +277,29 @@ function PDFGenerator({ data, ticketId }) {
         </View>
 
         {/* Render grouped components */}
-        {getLeafComponentsGroupedByTitle(bodySchema)?.map((collection) => (
+        {cleaned?.map((collection) => (
           <View style={styles.section} key={collection?.title}>
             <Text style={styles.groupHeading}>{collection?.title}</Text>
             <View style={styles.table}>
               <View style={styles.headerRow}>
-                <Text style={[styles.cell]}>Title</Text>
-                <Text style={[styles.cell, styles.lastCell]}>Value</Text>
+                <Text style={[styles.cell, styles.headerText]}>Title</Text>
+                <Text style={[styles.cell, styles.headerText, styles.lastCell]}>Value</Text>
               </View>
-              {collection?.data
-                ?.filter((item) => !containsHTML(item.label)) // Exclude labels with HTML tags
-                .map((item) => {
-                  let value;
-
-                  // Handle special cases like accountController
-                  if (item.key === 'accountController') {
-                    value = formatValue(data?.formData?.accountController);
-                  } else {
-                    value = formatValue(data?.formData?.[item.key]);
-                  }
-
-                  return (
-                    <View key={item.key} style={styles.row}>
-                      <Text style={styles.cell}>{item.label || 'N/A'}</Text>
-                      <Text style={[styles.cell, styles.lastCell]}>{value}</Text>
-                    </View>
-                  );
-                })}
+              {collection?.data?.map((item) => (
+                <View key={item.key} style={styles.row}>
+                  <Text style={styles.cell}>{item?.label || '--'}</Text>
+                  <Text style={[styles.cell, styles.lastCell]}>
+                    {(typeof item?.displayValue === 'string' || typeof item?.displayValue === 'number') && (item?.displayValue || item?.value) || '--'}
+                  </Text>
+                </View>
+              ))}
             </View>
           </View>
         ))}
 
         <View style={styles.footer}>
           <Text
-            style={styles.paragraph}
+            style={styles.pageNumber}
             render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
             fixed
           />
@@ -204,7 +307,9 @@ function PDFGenerator({ data, ticketId }) {
         </View>
       </Page>
     </Document>
-  )
+  );
 }
 
 export default PDFGenerator
+
+```
