@@ -1,3 +1,20 @@
+```
+function getSelectedLabels(schema, selectedValues) {
+  if (!schema?.data?.values || !Array.isArray(selectedValues)) {
+    return [];
+  }
+
+  const valueToLabelMap = schema.data.values.reduce((map, item) => {
+    map[item.value] = item.label;
+    return map;
+  }, {});
+
+  return selectedValues.map(value => valueToLabelMap[value]).filter(Boolean);
+}
+
+```
+
+
 const fs = require("fs").promises;
 
 /**
